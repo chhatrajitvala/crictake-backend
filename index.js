@@ -1,28 +1,44 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 10000;
+
+// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.post('/register', (req, res) => {
-  const { name, email, password } = req.body;
-  // Simulate registration success
-  res.status(200).json({ message: 'User registered successfully', user: { name, email } });
+// MongoDB Connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log("MongoDB connection failed:", err.message));
+
+// Routes
+const authRoutes = require("./routes/authRoutes");
+const matchRoutes = require("./routes/matchRoutes");
+const teamRoutes = require("./routes/teamRoutes");
+const contestRoutes = require("./routes/contestRoutes");
+const leaderboardRoutes = require("./routes/leaderboardRoutes");
+const fakeWinnersRoutes = require("./routes/fakeWinnersRoutes");
+
+app.use("/register", authRoutes);
+app.use("/login", authRoutes);
+app.use("/matches", matchRoutes);
+app.use("/teams", teamRoutes);
+app.use("/contests", contestRoutes);
+app.use("/leaderboard", leaderboardRoutes);
+app.use("/fakewinners", fakeWinnersRoutes);
+
+// Base Route
+app.get("/", (req, res) => {
+  res.send("Crictake Backend API is running ✅");
 });
 
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  // Simulate login success
-  res.status(200).json({ message: 'Login successful', user: { email } });
-});
-
-app.get('/', (req, res) => {
-  res.send('Crictake backend is running');
-});
-
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
