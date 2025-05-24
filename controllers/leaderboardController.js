@@ -1,4 +1,4 @@
-const Leaderboard = require("../models/leaderboardmodel");
+const Leaderboard = require("../models/leaderboardModel");
 
 exports.updateLeaderboard = async (req, res) => {
   try {

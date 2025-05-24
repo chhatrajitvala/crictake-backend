@@ -1,4 +1,4 @@
-const Contest = require("../models/contestmodel");
+const Contest = require("../models/contestModel");
 
 exports.joinContest = async (req, res) => {
   try {

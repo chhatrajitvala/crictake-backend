@@ -1,4 +1,4 @@
-const Match = require("../models/matchmodel");
+const Match = require("../models/matchModel");
 
 exports.addMatch = async (req, res) => {
   try {
