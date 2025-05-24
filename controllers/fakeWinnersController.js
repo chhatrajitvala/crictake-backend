@@ -1,4 +1,4 @@
-const FakeWinner = require("../models/fakeWinnerModel");
+const FakeWinner = require("../models/FakeWinnersModel");
 const Leaderboard = require("../models/leaderboardModel");
 
 const setFakeWinners = async (req, res) => {
